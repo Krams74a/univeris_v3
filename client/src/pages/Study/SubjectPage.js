@@ -209,6 +209,33 @@ const SubjectPage = () => {
         return 'secondary';
     };
 
+    useEffect(() => {
+        // Add event listeners to prevent text selection and context menu
+        const preventDefault = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        };
+
+        const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltipElements.forEach(element => {
+            element.addEventListener('selectstart', preventDefault);
+            element.addEventListener('contextmenu', preventDefault);
+            element.addEventListener('mousedown', preventDefault);
+            element.addEventListener('touchstart', preventDefault);
+        });
+
+        // Cleanup function
+        return () => {
+            tooltipElements.forEach(element => {
+                element.removeEventListener('selectstart', preventDefault);
+                element.removeEventListener('contextmenu', preventDefault);
+                element.removeEventListener('mousedown', preventDefault);
+                element.removeEventListener('touchstart', preventDefault);
+            });
+        };
+    }, [subjectData]); // Re-run when subjectData changes to catch new tooltips
+
     if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
