@@ -169,6 +169,18 @@ const SubjectPage = () => {
     };
 
     const handlePredictionChange = (name, value) => {
+        // Если поле пустое, сохраняем пустую строку
+        if (value === '') {
+            setPredictedRatings(prevRatings => {
+                const newRatings = {
+                    ...prevRatings,
+                    [name]: ''
+                };
+                return newRatings;
+            });
+            return;
+        }
+
         // Преобразуем в число и ограничиваем диапазоном 0-100
         const numValue = Math.min(Math.max(parseFloat(value) || 0, 0), 100);
         setPredictedRatings(prevRatings => {
@@ -181,6 +193,18 @@ const SubjectPage = () => {
     };
 
     const handleBonusPredictionChange = (name, value) => {
+        // Если поле пустое, сохраняем пустую строку
+        if (value === '') {
+            setPredictedBonusRatings(prevBonusRatings => {
+                const newBonusRatings = {
+                    ...prevBonusRatings,
+                    [name]: ''
+                };
+                return newBonusRatings;
+            });
+            return;
+        }
+
         // Преобразуем в число и ограничиваем диапазоном 0-100
         const numValue = Math.min(Math.max(parseFloat(value) || 0, 0), 100);
         setPredictedBonusRatings(prevBonusRatings => {
