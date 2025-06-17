@@ -169,7 +169,8 @@ const SubjectPage = () => {
     };
 
     const handlePredictionChange = (name, value) => {
-        const numValue = parseFloat(value) || 0;
+        // Преобразуем в число и ограничиваем диапазоном 0-100
+        const numValue = Math.min(Math.max(parseFloat(value) || 0, 0), 100);
         setPredictedRatings(prevRatings => {
             const newRatings = {
                 ...prevRatings,
@@ -180,7 +181,8 @@ const SubjectPage = () => {
     };
 
     const handleBonusPredictionChange = (name, value) => {
-        const numValue = parseFloat(value) || 0;
+        // Преобразуем в число и ограничиваем диапазоном 0-100
+        const numValue = Math.min(Math.max(parseFloat(value) || 0, 0), 100);
         setPredictedBonusRatings(prevBonusRatings => {
             const newBonusRatings = {
                 ...prevBonusRatings,
@@ -394,6 +396,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
                                                         className="d-none d-sm-block"
                                                     />
@@ -405,6 +408,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="%"
                                                         className="d-sm-none"
                                                     />
@@ -506,6 +510,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
                                                         className="d-none d-sm-block"
                                                     />
@@ -517,6 +522,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="%"
                                                         className="d-sm-none"
                                                     />
@@ -572,6 +578,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedBonusRatings[item.name] ?? ''}
                                                         onChange={(e) => handleBonusPredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handleBonusPredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
                                                         className="d-none d-sm-block"
                                                     />
@@ -583,6 +590,7 @@ const SubjectPage = () => {
                                                         step="1"
                                                         value={predictedBonusRatings[item.name] ?? ''}
                                                         onChange={(e) => handleBonusPredictionChange(item.name, e.target.value)}
+                                                        onBlur={(e) => handleBonusPredictionChange(item.name, e.target.value)}
                                                         placeholder="%"
                                                         className="d-sm-none"
                                                     />
