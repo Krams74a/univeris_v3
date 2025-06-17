@@ -1,0 +1,123 @@
+.study-plan-table {
+    width: 100%;
+}
+
+.study-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.instructors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.instructor-name {
+    font-size: 0.9rem;
+    white-space: normal;
+    word-break: break-word;
+    hyphens: auto;
+    display: block;
+}
+
+.control-type {
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    cursor: help;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .study-plan-table table {
+        font-size: 0.9rem;
+    }
+
+    .discipline-col {
+        width: 40%;
+    }
+
+    .instructor-col {
+        width: 30%;
+    }
+
+    .control-col {
+        width: 10%;
+    }
+
+    .rating-col {
+        width: 20%;
+    }
+
+    .instructor-name {
+        font-size: 0.8rem;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+}
+
+/* Стили для маленьких экранов */
+@media (max-width: 480px) {
+    .study-plan-table table {
+        font-size: 0.8rem;
+    }
+
+    .discipline-col {
+        width: 45%;
+    }
+
+    .instructor-col {
+        width: 25%;
+    }
+
+    .control-col {
+        width: 10%;
+    }
+
+    .rating-col {
+        width: 20%;
+    }
+
+    .instructor-name {
+        font-size: 0.75rem;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media (max-width: 360px) {
+    .study-plan-table table {
+        font-size: 0.75rem;
+    }
+
+    .discipline-col {
+        width: 50%;
+    }
+
+    .instructor-col {
+        width: 20%;
+    }
+
+    .control-col {
+        width: 10%;
+    }
+
+    .rating-col {
+        width: 20%;
+    }
+
+    .instructor-name {
+        font-size: 0.7rem;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+    }
+} 

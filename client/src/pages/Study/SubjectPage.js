@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Card, Table, Badge, Spinner, Alert, Button, Form, InputGroup } from 'react-bootstrap';
+import { Card, Table, Badge, Spinner, Alert, Button, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useTheme } from '../../components/ThemeProvider';
 import { studyApi } from '../../api/studyApi';
+import './SubjectPage.css';
 
 const SubjectPage = () => {
     const { subjectId, termNumber } = useParams();
@@ -244,10 +245,10 @@ const SubjectPage = () => {
 
             <Card bg={isDark ? 'dark' : 'light'} text={isDark ? 'light' : 'dark'} border={isDark ? 'light' : 'dark'}>
                 <Card.Header>
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
                         <h3 className="mb-0">{subjectData.disciplineName}</h3>
                         {canSetAgreement && (
-                            <div className="d-flex align-items-center gap-3">
+                            <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
                                 {subjectData.hasAgreement && (
                                     <Badge bg="primary" className="p-2">
                                         Рейтинг на момент согласия: {subjectData.agreementRating.toFixed(2)}
@@ -268,16 +269,16 @@ const SubjectPage = () => {
                 <Card.Body>
                     <div className="mb-4">
                         <h4>Текущий рейтинг</h4>
-                        <div className="d-flex gap-3">
+                        <div className="d-flex flex-column flex-sm-row gap-2">
                             <Badge bg="primary" className="p-2">
-                                Текущий рейтинг: {subjectData.currentRating.toFixed(2)}
+                                Текущий: {subjectData.currentRating.toFixed(2)}
                             </Badge>
                             <Badge bg="secondary" className="p-2">
-                                Общий рейтинг: {subjectData.totalRating.toFixed(2)}
+                                Общий: {subjectData.totalRating.toFixed(2)}
                             </Badge>
                             {predictedTotalRating !== null && (
                                 <Badge bg={getRatingColor(predictedTotalRating, controlType)} className="p-2">
-                                    Предсказанный рейтинг: {predictedTotalRating.toFixed(2)}
+                                    Предсказанный: {predictedTotalRating.toFixed(2)}
                                 </Badge>
                             )}
                         </div>
@@ -291,10 +292,58 @@ const SubjectPage = () => {
                                     <tr>
                                         <th>Название</th>
                                         <th>Рейтинг</th>
-                                        <th>Баллы</th>
-                                        <th>Макс. баллы</th>
-                                        <th>Вес</th>
-                                        <th>Предсказание</th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Баллы</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Баллы</span>
+                                                    <span className="d-inline d-sm-none">Б</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Максимальные баллы</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Макс. баллы</span>
+                                                    <span className="d-inline d-sm-none">МБ</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Вес</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Вес</span>
+                                                    <span className="d-inline d-sm-none">В</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Предсказание</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Предсказание</span>
+                                                    <span className="d-inline d-sm-none">Пред.</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -319,8 +368,19 @@ const SubjectPage = () => {
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
+                                                        className="d-none d-sm-block"
                                                     />
-                                                    <InputGroup.Text>%</InputGroup.Text>
+                                                    <InputGroup.Text className="d-none d-sm-block">%</InputGroup.Text>
+                                                    <Form.Control
+                                                        type="number"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        value={predictedRatings[item.name] ?? ''}
+                                                        onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        placeholder="%"
+                                                        className="d-sm-none"
+                                                    />
                                                 </InputGroup>
                                             </td>
                                         </tr>
@@ -344,10 +404,58 @@ const SubjectPage = () => {
                                     <tr>
                                         <th>Название</th>
                                         <th>Рейтинг</th>
-                                        <th>Баллы</th>
-                                        <th>Макс. баллы</th>
-                                        <th>Вес</th>
-                                        <th>Предсказание</th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Баллы</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Баллы</span>
+                                                    <span className="d-inline d-sm-none">Б</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Максимальные баллы</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Макс. баллы</span>
+                                                    <span className="d-inline d-sm-none">МБ</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Вес</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Вес</span>
+                                                    <span className="d-inline d-sm-none">В</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
+                                        <th>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Предсказание</Tooltip>}
+                                                delay={{ show: 0, hide: 250 }}
+                                                trigger={['hover', 'focus', 'click']}
+                                            >
+                                                <div>
+                                                    <span className="d-none d-sm-inline">Предсказание</span>
+                                                    <span className="d-inline d-sm-none">Пред.</span>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -372,8 +480,19 @@ const SubjectPage = () => {
                                                         value={predictedRatings[item.name] ?? ''}
                                                         onChange={(e) => handlePredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
+                                                        className="d-none d-sm-block"
                                                     />
-                                                    <InputGroup.Text>%</InputGroup.Text>
+                                                    <InputGroup.Text className="d-none d-sm-block">%</InputGroup.Text>
+                                                    <Form.Control
+                                                        type="number"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        value={predictedRatings[item.name] ?? ''}
+                                                        onChange={(e) => handlePredictionChange(item.name, e.target.value)}
+                                                        placeholder="%"
+                                                        className="d-sm-none"
+                                                    />
                                                 </InputGroup>
                                             </td>
                                         </tr>
@@ -427,8 +546,19 @@ const SubjectPage = () => {
                                                         value={predictedBonusRatings[item.name] ?? ''}
                                                         onChange={(e) => handleBonusPredictionChange(item.name, e.target.value)}
                                                         placeholder="Введите %"
+                                                        className="d-none d-sm-block"
                                                     />
-                                                    <InputGroup.Text>%</InputGroup.Text>
+                                                    <InputGroup.Text className="d-none d-sm-block">%</InputGroup.Text>
+                                                    <Form.Control
+                                                        type="number"
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        value={predictedBonusRatings[item.name] ?? ''}
+                                                        onChange={(e) => handleBonusPredictionChange(item.name, e.target.value)}
+                                                        placeholder="%"
+                                                        className="d-sm-none"
+                                                    />
                                                 </InputGroup>
                                             </td>
                                         </tr>

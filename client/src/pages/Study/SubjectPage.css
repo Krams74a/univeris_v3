@@ -1,0 +1,102 @@
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table th {
+    white-space: nowrap;
+    cursor: help;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Стили для колонки с названием */
+.table td:first-child,
+.table th:first-child {
+    max-width: 150px;
+    min-width: 100px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+    }
+
+    .input-group-text {
+        font-size: 0.9rem;
+    }
+
+    .table td:first-child,
+    .table th:first-child {
+        max-width: 120px;
+        min-width: 80px;
+    }
+
+    /* Исправление скругления углов для мобильного инпута */
+    .input-group .form-control.d-sm-none {
+        border-radius: 0.375rem !important;
+    }
+}
+
+/* Стили для маленьких экранов */
+@media (max-width: 480px) {
+    .table {
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        font-size: 0.8rem;
+    }
+
+    .input-group-text {
+        font-size: 0.8rem;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    .table td:first-child,
+    .table th:first-child {
+        max-width: 100px;
+        min-width: 70px;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media (max-width: 360px) {
+    .table {
+        font-size: 0.75rem;
+    }
+
+    .form-control {
+        font-size: 0.75rem;
+    }
+
+    .input-group-text {
+        font-size: 0.75rem;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+
+    .table td:first-child,
+    .table th:first-child {
+        max-width: 80px;
+        min-width: 60px;
+    }
+} 
