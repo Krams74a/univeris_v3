@@ -99,4 +99,28 @@
         max-width: 80px;
         min-width: 60px;
     }
+}
+
+/* Prevent text selection in tooltip elements */
+[data-bs-toggle="tooltip"],
+[data-bs-toggle="tooltip"] * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Ensure tooltip content is not selectable */
+.tooltip {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.tooltip-inner {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 } 
