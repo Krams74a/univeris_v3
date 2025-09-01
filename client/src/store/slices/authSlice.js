@@ -81,10 +81,10 @@ const authSlice = createSlice({
             state.error = null;
         },
         loginSuccess: (state, action) => {
-            const { token, id, userName, email, firstName, middleName, lastName, student, ...rest } = action.payload;
+            const { accessToken, id, userName, email, firstName, middleName, lastName, student, ...rest } = action.payload;
             
             // Проверяем срок действия токена перед сохранением
-            if (isTokenExpired(token)) {
+            if (isTokenExpired(accessToken)) {
                 state.isAuthenticated = false;
                 state.user = null;
                 state.token = null;
@@ -94,7 +94,7 @@ const authSlice = createSlice({
             }
 
             state.isAuthenticated = true;
-            state.token = token;
+            state.token = accessToken;
             state.user = {
                 id,
                 userName,
@@ -116,7 +116,7 @@ const authSlice = createSlice({
         logout: (state) => {
             state.isAuthenticated = false;
             state.user = null;
-            state.token = null;
+            state.accessToken = null;
             state.loading = false;
             state.error = null;
             localStorage.removeItem('authState');

@@ -86,7 +86,11 @@ const authApi = {
             const formData = new FormData();
             formData.append('login', credentials.login);
             formData.append('password', credentials.password);
-
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            const length = 32;
+            const randomString = Array.from({ length }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
+            formData.append('identity', randomString);
+            
             const response = await axios.post(`${API_URL}/Auth/Login`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -94,17 +98,18 @@ const authApi = {
             });
 
             // Проверяем наличие токена в ответе
-            if (response.data && response.data.token) {
-                const { token, ...userData } = response.data;
+            console.log(response.data);
+            if (response.data && response.data.accessToken) {
+                const { accessToken, ...userData } = response.data;
                 
                 // Сохраняем токен и данные пользователя
-                localStorage.setItem('authToken', token);
+                localStorage.setItem('authToken', accessToken);
                 localStorage.setItem('userData', JSON.stringify(userData));
                 
                 // Обновляем состояние Redux
-                store.dispatch(loginSuccess({ token, ...userData }));
+                store.dispatch(loginSuccess({ accessToken, ...userData }));
                 
-                return { success: true, token, ...userData };
+                return { success: true, accessToken, ...userData };
             } else {
                 console.error('Login response missing token:', response.data);
                 return { 
